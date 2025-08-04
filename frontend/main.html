@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rubik's Cube Timer</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+            color: #333;
+            margin: 0;
+            overflow: hidden;
+            user-select: none; /* Prevent text selection */
+        }
+
+        #container {
+            background-color: #fff;
+            padding: 40px 60px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        #timer {
+            font-size: 6em;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: #007bff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            min-width: 400px;
+            display: inline-block;
+        }
+
+        #scramble-display {
+            font-size: 1.8em;
+            margin-top: 20px;
+            margin-bottom: 40px;
+            padding: 15px 25px;
+            background-color: #e9ecef;
+            border-radius: 10px;
+            border: 1px solid #dee2e6;
+            color: #495057;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .instruction {
+            font-size: 1.2em;
+            color: #6c757d;
+            margin-top: 20px;
+        }
+
+        #cube-art-container {
+            display: flex;
+            perspective: 800px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+
+        /* Based on [dev.to](https://dev.to/mackfitz/css-3d-the-cube-part-1-393j) */
+        #cube {
+            width: 150px;
+            height: 150px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotateCube 15s infinite linear;
+        }
+
+        @keyframes rotateCube {
+            from { transform: rotateX(-30deg) rotateY(45deg); }
+            to { transform: rotateX(-30deg) rotateY(405deg); }
+        }
+
+        .face {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border: 2px solid #333;
+            display: flex;
+            flex-wrap: wrap;
+            box-sizing: border-box;
+        }
+
+        .face.front {
+            transform: rotateY(0deg) translateZ(75px);
+        }
+        .face.back {
+            transform: rotateY(180deg) translateZ(75px);
+        }
+        .face.right {
+            transform: rotateY(90deg) translateZ(75px);
+        }
+        .face.left {
+            transform: rotateY(-90deg) translateZ(75px);
+        }
+        .face.top {
+            transform: rotateX(90deg) translateZ(75px);
+        }
+        .face.bottom {
+            transform: rotateX(-90deg) translateZ(75px);
+        }
+
+        .sticker {
+            width: calc(150px / 3 - 2px); /* 3x3 grid, minus border */
+            height: calc(150px / 3 - 2px);
+            border: 1px solid rgba(0,0,0,0.2);
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="scramble-display">
+            Generating Scramble...
+        </div>
+        <div id="timer">00:00.000</div>
+        <div class="instruction">Press <kbd>Spacebar</kbd> to start/stop</div>
+    </div>
+
+    <div id="cube-art-container">
+        <div id="cube">
+            <div class="face front"></div> 
+            <div class="face back"></div>
+            <div class="face right"></div>
+            <div class="face left"></div>
+            <div class="face top"></div>
+            <div class="face bottom"></div>
+        </div>
+    </div>
+  <script type = "module" src="app.js"></script>
+</body>
+</html>

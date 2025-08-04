@@ -1,0 +1,20 @@
+{
+  "name": "cubetimer",
+  "version": "1.0.0",
+  "description": "A rubik's cube timing web app",
+  "scripts": {
+    "start": "parcel main.html",
+    "build": "parcel build main.html"
+  },
+  "author": "Ross Burnett",
+  "license": "MIT",
+  "dependencies": {
+    "live-server": "^1.2.2",
+    "tnoodle": "^0.0.2"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.2",
+    "parcel": "^2.15.4",
+    "tnoodle": "0.0.2"
+  }
+}

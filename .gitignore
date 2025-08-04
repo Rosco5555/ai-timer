@@ -1,0 +1,44 @@
+# Ignore Node.js dependencies in all subdirectories
+**/node_modules/
+
+# Ignore Parcel's output directories
+# Parcel often defaults to 'dist', but can be configured.
+# If you've configured it to use 'build', change 'dist/' to 'build/'.
+frontend/dist/
+
+# If you have a .parcel-cache directory created by Parcel, ignore that too:
+frontend/.parcel-cache/
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE/Editor configuration files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Log files
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Backend specific ignore rules (adjust as needed)
+backend/build/
+backend/dist/
+backend/.build/
+
+# Testing related files
+coverage/
+
+# Temporary files
+tmp/
