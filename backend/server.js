@@ -49,13 +49,10 @@ function generateWCAScramble(length = 20) {
 
 // Middleware
 app.use(express.json());
-
-// Enable CORS for all origins
-app.use(cors());
-
-// OR configure CORS with specific options
 app.use(cors({
-    origin: ['http://localhost:3000'],
+    origin: process.env.NODE_ENV === 'production' 
+        ? ['https://ai-cube-timer-git-main-rosco5555s-projects.vercel.app'] 
+        : ['http://localhost:1234'], // Parcel default port
     methods: ['GET', 'POST'],
     credentials: true
 }));
@@ -139,7 +136,13 @@ app.get('/', (req, res) => {
     });
 });
 
-// Start server
-app.listen(PORT, () => {
-    console.log(`Scramble API server running on http://localhost:${PORT}`);
-});
+// Conditional: Only listen when running locally
+if (process.env.NODE_ENV !== 'production') {
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => {
+        console.log(`Scramble API server running on http://localhost:${PORT}`);
+    });
+}
+
+// Export for Vercel
+export default app;
