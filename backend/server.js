@@ -1,4 +1,6 @@
 import express from "express";
+import cors from "cors";
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -47,6 +49,16 @@ function generateWCAScramble(length = 20) {
 
 // Middleware
 app.use(express.json());
+
+// Enable CORS for all origins
+app.use(cors());
+
+// OR configure CORS with specific options
+app.use(cors({
+    origin: ['http://localhost:3000'],
+    methods: ['GET', 'POST'],
+    credentials: true
+}));
 
 // GET endpoint for scramble
 app.get('/api/scramble', (req, res) => {
