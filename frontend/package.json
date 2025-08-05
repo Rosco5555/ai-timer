@@ -4,7 +4,8 @@
   "description": "A rubik's cube timing web app",
   "scripts": {
     "start": "parcel main.html",
-    "build": "parcel build main.html"
+    "build": "parcel build main.html --dist-dir dist --public-url /",
+    "vercel-build": "parcel build main.html --dist-dir dist --public-url /"
   },
   "author": "Ross Burnett",
   "license": "MIT",
