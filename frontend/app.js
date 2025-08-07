@@ -50,32 +50,7 @@ function stopTimer() {
 }
 
 async function generateScramble() {
-    scrambleDisplay.textContent = "Generating Scramble...";
-    try {
-        var response = await fetch("http://localhost:3000/api/scramble");
-        if (!response.ok) { 
-                // If the response is not OK, try to get an error message from the backend
-                let errorMessage = `HTTP error! Status: ${response.status}`;
-                try {
-                    // Try to parse the error response as JSON
-                    const errorData = await response.json();
-                    errorMessage = errorData.message || errorData.error || errorMessage; // Use backend's specific error message
-                } catch (jsonError) {
-                    // If the response isn't JSON, just use the status text
-                    errorMessage = response.statusText || errorMessage;
-                }
-                throw new Error(errorMessage); // Throw an error to be caught by the catch block
-            }
-
-            // Parse the successful JSON response from the backend
-            const data = await response.json();
-
-            const latestScramble = data["scramble"];
-            scrambleDisplay.textContent = latestScramble;
-    } catch (error) {
-        console.error("Error generating scramble:", error);
-        scrambleDisplay.textContent = "Error generating scramble.";
-    }
+    scrambleDisplay.textContent = generateWCAScramble();
 }
 
 function drawCube() {
@@ -126,6 +101,50 @@ document.addEventListener('keyup', (e) => {
         }
     }
 });
+
+
+// Scramble generation function
+function generateWCAScramble(length = 20) {
+    const faces = ['U', 'D', 'R', 'L', 'F', 'B'];
+    const suffixes = ['', '2', "'"];
+    
+    // Group faces by axis
+    const axes = [
+        ['U', 'D'],  // y-axis
+        ['R', 'L'],  // x-axis
+        ['F', 'B']   // z-axis
+    ];
+    
+    let scramble = [];
+    let lastAxis = -1;
+    let lastFace = '';
+    
+    while (scramble.length < length) {
+        // Choose a random axis (but not the same as the last one if possible)
+        let axisIndex;
+        do {
+            axisIndex = Math.floor(Math.random() * axes.length);
+        } while (axisIndex === lastAxis && scramble.length > 0 && Math.random() > 0.1);
+        
+        // Choose a random face from this axis
+        const axis = axes[axisIndex];
+        let face = axis[Math.floor(Math.random() * axis.length)];
+        
+        // If we're on the same axis as last move, ensure we don't use the same face
+        if (axisIndex === lastAxis && face === lastFace) {
+            face = axis[1 - axis.indexOf(face)];
+        }
+        
+        // Choose a random suffix
+        const suffix = suffixes[Math.floor(Math.random() * suffixes.length)];
+        
+        scramble.push(face + suffix);
+        lastAxis = axisIndex;
+        lastFace = face;
+    }
+    
+    return scramble.join(' ');
+}
 
 // Initialize
 generateScramble();
